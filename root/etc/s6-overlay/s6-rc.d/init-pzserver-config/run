@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+printf "Fixing permissons...\n"
+    lsiown -R abc:abc /app
+printf "Permissions fixed\n"

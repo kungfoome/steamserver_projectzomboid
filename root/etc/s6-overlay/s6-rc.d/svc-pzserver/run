@@ -1,0 +1,26 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+SERVERNAME=${SERVERNAME:-"pzserver"}
+ADMINUSER=${ADMINUSER:-"admin"}
+ADMINPASSWORD=${ADMINPASSWORD:-"changeme852456"}
+DEBUG=${DEBUG:-""}
+JVM_MEM=${JVM_MEM:-"4g"}
+STEAM_VAC=${STEAM_VAC:-"true"}
+
+if [ "${DEBUG}" == "true" ]; then
+    DEBUG="-debug"
+fi
+
+s6-setuidgid abc
+
+exec /app/pzserver/server/start-server.sh -Xmx$JVM_MEM -Xms$JVM_MEM -- \
+    -servername "${SERVERNAME}" \
+    -adminusername "${ADMINUSER}" \
+    -adminpassword "${ADMINPASSWORD}" \
+    -cachedir="/config" \
+    -port "16261" \
+    -udpport "16262" \
+    -steamvac "${STEAM_VAC}" \
+    "${DEBUG}"/home/killabeezio/repos/zomboid-server
+
